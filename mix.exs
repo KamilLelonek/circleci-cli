@@ -15,13 +15,15 @@ defmodule CircleciCli.Mixfile do
   def application do
     [
       applications: [
-        :logger
+        :logger,
+        :httpoison
       ]
     ]
   end
 
   defp deps do
     [
+      {:httpoison, "~> 0.7"}
     ]
   end
 end
