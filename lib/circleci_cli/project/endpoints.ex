@@ -3,11 +3,11 @@ defmodule CircleciCli.Project.Endpoints do
     "/project/#{user}/#{project}"
   end
 
-  def add_ssh_key(user, project, key) do
+  def ssh_key(user, project, key) do
     "/project/#{user}/#{project}/ssh-key"
   end
 
-  def clear_cache(user, project) do
+  def cache(user, project) do
     "/project/#{user}/#{project}/build-cache"
   end
 end
