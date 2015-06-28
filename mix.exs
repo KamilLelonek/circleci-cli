@@ -4,6 +4,7 @@ defmodule CircleciCli.Mixfile do
   def project do
     [
       app:             :circleci_cli,
+      source_url:      "https://github.com/KamilLelonek/circleci-cli",
       version:         "0.0.1",
       elixir:          "~> 1.0",
       build_embedded:  Mix.env == :prod,
