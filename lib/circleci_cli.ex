@@ -1,2 +1,1 @@
-defmodule CircleciCli do
-end
+defmodule CircleciCli do end

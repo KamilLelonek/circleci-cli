@@ -4,7 +4,7 @@ defmodule CircleciCli.Cli do
   require CircleciCli.Interpreter
   alias   CircleciCli.Interpreter
 
-  def run(argv) do
+  def main(argv) do
     argv
       |> Parser.parse_args
       |> Interpreter.interpret_command

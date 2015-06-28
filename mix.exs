@@ -8,7 +8,8 @@ defmodule CircleciCli.Mixfile do
       elixir:          "~> 1.0",
       build_embedded:  Mix.env == :prod,
       start_permanent: Mix.env == :prod,
-      deps:            deps
+      deps:            deps,
+      escript:         escript_config
     ]
   end
 
@@ -25,5 +26,9 @@ defmodule CircleciCli.Mixfile do
     [
       {:httpoison, "~> 0.7"}
     ]
+  end
+
+  defp escript_config do
+    [main_module: CircleciCli.Cli]
   end
 end
