@@ -1,8 +1,6 @@
 defmodule CircleciCli.Cli do
-  require CircleciCli.Parser
-  alias   CircleciCli.Parser
-  require CircleciCli.Interpreter
-  alias   CircleciCli.Interpreter
+  require CircleciCli.Parser,      as: Parser
+  require CircleciCli.Interpreter, as: Interpreter
 
   def main(argv) do
     argv
