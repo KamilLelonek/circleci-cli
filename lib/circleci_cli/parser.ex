@@ -1,9 +1,7 @@
 defmodule CircleciCli.Parser do
-  def parse_args(args) do
+  def parse_args(token, args) do
     case parsed_args(args) do
       { [help:  true],  _, _ }     -> :help
-      { _, _, [{"--token", nil}] } -> :help
-
       { _,                                                  ["user"],        _ } -> :user
       { _,                                                  ["projects"],    _ } -> :projects
       { _,                                                  ["builds"],      _ } -> :recent_builds
