@@ -12,8 +12,8 @@ defmodule CircleciCli.Persistence.Token do
 
   defp read_token_from_file({ :error, _ }) do
     case token_from_env do
-      nil   -> { :error, "Neither file nor environmental variable with token was found."}
-      token -> { :ok, token}
+      nil   -> { :error, nil   }
+      token -> { :ok,    token }
     end
   end
 

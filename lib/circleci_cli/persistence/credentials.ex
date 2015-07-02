@@ -18,7 +18,7 @@ defmodule CircleciCli.Persistence.Credentials do
 
   defp fetch_token({:error, _}) do
     IO.puts """
-      CircleCI API token is not set!
+      CircleCI API token is not set! Neither file nor environmental variable with token was found.
 
       You can create one here: https://circleci.com/account/api and then do one of the following:
 
