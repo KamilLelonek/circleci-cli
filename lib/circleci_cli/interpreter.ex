@@ -1,7 +1,5 @@
 defmodule CircleciCli.Interpreter do
-  def interpret_command(:help) do
-    IO.puts usage
-  end
+  def interpret_command(:help), do: IO.puts usage
 
   defp usage do
     """
