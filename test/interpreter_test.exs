@@ -93,7 +93,7 @@ defmodule CircleciCli.InterpreterTest do
   end
 
   defp assert_parse(args, result) do
-    assert parse_and_interpret(args) == result
+    assert parse_and_interpret(args) == [url: result]
   end
 
   defp parse_and_interpret(args) do

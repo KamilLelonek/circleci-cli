@@ -4,19 +4,19 @@ defmodule CircleciCli.Interpreter do
   require CircleciCli.User.Endpoints,    as: UserEndpoints
   require CircleciCli.HTTP.URL,          as: URL
 
-  def interpret_command({:user,                    token}),                          do: URL.build(UserEndpoints.me, token)
-  def interpret_command({:projects,                token}),                          do: URL.build(UserEndpoints.projects, token)
-  def interpret_command({:recent_builds,           token}),                          do: URL.build(UserEndpoints.recent_builds, token)
-  def interpret_command({:user_add_ssh_key,        token, key}),                     do: URL.build(UserEndpoints.ssh_key(key), token)
-  def interpret_command({:user_add_heroku_key,     token, key}),                     do: URL.build(UserEndpoints.heroku_key(key), token)
-  def interpret_command({:project,                 token, user, project}),           do: URL.build(ProjectEndpoints.builds(user, project), token)
-  def interpret_command({:project_clear_cache,     token, user, project}),           do: URL.build(ProjectEndpoints.cache(user, project), token)
-  def interpret_command({:project_build_trigger,   token, user, project, branch}),   do: URL.build(ProjectEndpoints.trigger(user, project, branch), token)
-  def interpret_command({:project_add_ssh_key,     token, user, project, key}),      do: URL.build(ProjectEndpoints.ssh_key(user, project, key), token)
-  def interpret_command({:project_build,           token, user, project, build_no}), do: URL.build(BuildEndpoints.details(user, project, build_no), token)
-  def interpret_command({:project_build_artifacts, token, user, project, build_no}), do: URL.build(BuildEndpoints.artifacts(user, project, build_no), token)
-  def interpret_command({:project_build_retry,     token, user, project, build_no}), do: URL.build(BuildEndpoints.retry(user, project, build_no), token)
-  def interpret_command({:project_build_cancel,    token, user, project, build_no}), do: URL.build(BuildEndpoints.cancel(user, project, build_no), token)
+  def interpret_command({:user,                    token}),                          do: [url: URL.build(UserEndpoints.me, token)]
+  def interpret_command({:projects,                token}),                          do: [url: URL.build(UserEndpoints.projects, token)]
+  def interpret_command({:recent_builds,           token}),                          do: [url: URL.build(UserEndpoints.recent_builds, token)]
+  def interpret_command({:user_add_ssh_key,        token, key}),                     do: [url: URL.build(UserEndpoints.ssh_key(key), token)]
+  def interpret_command({:user_add_heroku_key,     token, key}),                     do: [url: URL.build(UserEndpoints.heroku_key(key), token)]
+  def interpret_command({:project,                 token, user, project}),           do: [url: URL.build(ProjectEndpoints.builds(user, project), token)]
+  def interpret_command({:project_clear_cache,     token, user, project}),           do: [url: URL.build(ProjectEndpoints.cache(user, project), token)]
+  def interpret_command({:project_build_trigger,   token, user, project, branch}),   do: [url: URL.build(ProjectEndpoints.trigger(user, project, branch), token)]
+  def interpret_command({:project_add_ssh_key,     token, user, project, key}),      do: [url: URL.build(ProjectEndpoints.ssh_key(user, project, key), token)]
+  def interpret_command({:project_build,           token, user, project, build_no}), do: [url: URL.build(BuildEndpoints.details(user, project, build_no), token)]
+  def interpret_command({:project_build_artifacts, token, user, project, build_no}), do: [url: URL.build(BuildEndpoints.artifacts(user, project, build_no), token)]
+  def interpret_command({:project_build_retry,     token, user, project, build_no}), do: [url: URL.build(BuildEndpoints.retry(user, project, build_no), token)]
+  def interpret_command({:project_build_cancel,    token, user, project, build_no}), do: [url: URL.build(BuildEndpoints.cancel(user, project, build_no), token)]
 
   def interpret_command(:help) do
     IO.puts """
