@@ -10,4 +10,8 @@ defmodule CircleciCli.Project.Endpoints do
   def cache(user, project) do
     "/project/#{user}/#{project}/build-cache"
   end
+
+  def trigger(user, project, branch) do
+    "/project/#{user}/#{project}/tree/#{branch}"
+  end
 end

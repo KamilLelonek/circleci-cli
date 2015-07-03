@@ -14,8 +14,4 @@ defmodule CircleciCli.Build.Endpoints do
   def cancel(user, project, build_number) do
     " /project/#{user}/#{project}/#{build_number}/cancel"
   end
-
-  def trigger(user, project, branch) do
-    "/project/#{user}/#{project}/tree/#{branch}"
-  end
 end
