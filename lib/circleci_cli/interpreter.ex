@@ -46,7 +46,7 @@ defmodule CircleciCli.Interpreter do
         -t VALUE, --token=VALUE
         -u VALUE, --user=VALUE
         -p VALUE, --project=VALUE
-        -n VALUE, --build_no=VALUE
+        -n VALUE, --build=VALUE
         -b VALUE, --branch=VALUE
         -k VALUE, --key=VALUE
     """
