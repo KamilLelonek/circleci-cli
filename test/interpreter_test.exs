@@ -12,8 +12,8 @@ defmodule CircleciCli.InterpreterTest do
   @branch  "master"
 
   test "help command" do
-    assert_parse ["--help"], :ok
-    assert_parse ["--h"],    :ok
+    assert catch_exit(parse_and_interpret ["--help"]) == :shutdown
+    assert catch_exit(parse_and_interpret ["-h"])     == :shutdown
   end
 
   test "user command" do
@@ -88,11 +88,15 @@ defmodule CircleciCli.InterpreterTest do
   end
 
   test "any other command" do
-    assert_parse [],           :ok
-    assert_parse ["whatever"], :ok
+    assert catch_exit(parse_and_interpret [])           == :shutdown
+    assert catch_exit(parse_and_interpret ["whatever"]) == :shutdown
   end
 
   defp assert_parse(args, result) do
-    assert (Parser.parse_args(@token, args) |> Interpreter.interpret_command) == result
+    assert parse_and_interpret(args) == result
+  end
+
+  defp parse_and_interpret(args) do
+    Parser.parse_args(@token, args) |> Interpreter.interpret_command
   end
 end

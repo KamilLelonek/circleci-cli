@@ -4,7 +4,6 @@ defmodule CircleciCli.Interpreter do
   require CircleciCli.User.Endpoints,    as: UserEndpoints
   require CircleciCli.HTTP.URL,          as: URL
 
-  def interpret_command(:help),                                                      do: IO.puts usage
   def interpret_command({:user,                    token}),                          do: URL.build(UserEndpoints.me, token)
   def interpret_command({:projects,                token}),                          do: URL.build(UserEndpoints.projects, token)
   def interpret_command({:recent_builds,           token}),                          do: URL.build(UserEndpoints.recent_builds, token)
@@ -19,9 +18,8 @@ defmodule CircleciCli.Interpreter do
   def interpret_command({:project_build_retry,     token, user, project, build_no}), do: URL.build(BuildEndpoints.retry(user, project, build_no), token)
   def interpret_command({:project_build_cancel,    token, user, project, build_no}), do: URL.build(BuildEndpoints.cancel(user, project, build_no), token)
 
-  defp usage do
-    """
-
+  def interpret_command(:help) do
+    IO.puts """
       Usage: circleci [command] [--token=CIRCLECI_API_TOKEN]
 
         You don't have to provide CIRCLECI_API_TOKEN each time, instead you can store it in environment variable.
@@ -52,5 +50,6 @@ defmodule CircleciCli.Interpreter do
         -b VALUE, --branch=VALUE
         -k VALUE, --key=VALUE
     """
+    exit :shutdown
   end
 end
