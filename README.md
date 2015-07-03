@@ -5,3 +5,9 @@ CircleCI command line interface based on the [REST API](https://circleci.com/doc
 ## Setup
 
 1. Create a new CircleCI token on [API Tokens page](https://circleci.com/account/api).
+
+## Tests
+
+To run all tests do:
+
+    mix test
