@@ -2,10 +2,14 @@ defmodule CircleciCli.Persistence.Credentials do
   require CircleciCli.Persistence.Token, as: Token
 
   def check(args) do
-    case parsed_args(args) do
-      { [token: token], _, _ } when byte_size(token) > 0 -> token
+    case token_from_args(args) do
+      token when token != nil and token != "" -> token
       _ -> fetch_token Token.read
     end
+  end
+
+  defp token_from_args(args) do
+    parsed_args(args)|> elem(0) |> Keyword.get(:token)
   end
 
   defp parsed_args(args) do
