@@ -1,6 +1,8 @@
 defmodule CircleciCli.InterpreterTest do
   use ExUnit.Case
 
+  import ExUnit.CaptureIO
+
   require CircleciCli.Parser,      as: Parser
   require CircleciCli.Interpreter, as: Interpreter
 
@@ -12,8 +14,12 @@ defmodule CircleciCli.InterpreterTest do
   @branch  "master"
 
   test "help command" do
-    assert catch_exit(parse_and_interpret ["--help"]) == :shutdown
-    assert catch_exit(parse_and_interpret ["-h"])     == :shutdown
+    assert capture_io fn ->
+      assert catch_exit(parse_and_interpret ["--help"]) == :shutdown
+    end
+    assert capture_io fn ->
+      assert catch_exit(parse_and_interpret ["-h"]) == :shutdown
+    end
   end
 
   test "user command" do
@@ -88,8 +94,12 @@ defmodule CircleciCli.InterpreterTest do
   end
 
   test "any other command" do
-    assert catch_exit(parse_and_interpret [])           == :shutdown
-    assert catch_exit(parse_and_interpret ["whatever"]) == :shutdown
+    assert capture_io fn ->
+      assert catch_exit(parse_and_interpret []) == :shutdown
+    end
+    assert capture_io fn ->
+      assert catch_exit(parse_and_interpret ["whatever"]) == :shutdown
+    end
   end
 
   defp assert_parse(args, result) do

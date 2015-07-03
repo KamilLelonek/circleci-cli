@@ -1,6 +1,8 @@
 defmodule CircleciCli.Persistence.CredentialsTest do
   use ExUnit.Case
 
+  import ExUnit.CaptureIO
+
   require CircleciCli.Persistence.Credentials, as: Credentials
   require CircleciCli.Persistence.Token,       as: Token
 
@@ -30,6 +32,8 @@ defmodule CircleciCli.Persistence.CredentialsTest do
   end
 
   test "should shutdown when no token" do
-    assert catch_exit(Credentials.check([])) == :shutdown
+    assert capture_io fn ->
+      assert catch_exit(Credentials.check([])) == :shutdown
+    end
   end
 end
