@@ -24,7 +24,6 @@ defmodule CircleciCli.Parser do
       args,
       switches: [
         help:    :boolean,
-        token:   :string,
         user:    :string,
         project: :string,
         build:   :integer,
@@ -33,7 +32,6 @@ defmodule CircleciCli.Parser do
       ],
       aliases:  [
         h: :help,
-        t: :token,
         u: :user,
         p: :project,
         n: :build,

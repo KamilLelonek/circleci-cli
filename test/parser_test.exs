@@ -9,11 +9,13 @@ defmodule CircleciCli.ParserTest do
   end
 
   test "user command" do
-    assert Praser.parse_args("", ["user"]) == {:user, ""}
+    assert Praser.parse_args("", ["user"])                  == {:user, ""}
+    assert Praser.parse_args("", ["user", "--token=token"]) == {:user, ""}
   end
 
   test "projects command" do
-    assert Praser.parse_args("", ["projects"]) == {:projects, ""}
+    assert Praser.parse_args("", ["projects"])                  == {:projects, ""}
+    assert Praser.parse_args("", ["projects", "--token=token"]) == {:projects, ""}
   end
 
   test "builds command" do
