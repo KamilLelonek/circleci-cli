@@ -1,57 +1,23 @@
 defmodule CircleciCli.Interpreter do
-  def interpret_command(:help), do: IO.puts usage
+  require CircleciCli.Build.Endpoints,   as: BuildEndpoints
+  require CircleciCli.Project.Endpoints, as: ProjectEndpoints
+  require CircleciCli.User.Endpoints,    as: UserEndpoints
+  require CircleciCli.HTTP.URL,          as: URL
 
-  def interpret_command({:user, token}) do
-
-  end
-
-  def interpret_command({:projects, token}) do
-
-  end
-
-  def interpret_command({:recent_builds, token}) do
-
-  end
-
-  def interpret_command({:project, token, user, project}) do
-
-  end
-
-  def interpret_command({:project_clear_cache, token, user, project}) do
-
-  end
-
-  def interpret_command({:project_build, token, user, project, build_no}) do
-
-  end
-
-  def interpret_command({:project_build_artifacts, token, user, project, build_no}) do
-
-  end
-
-  def interpret_command({:project_build_retry, token, user, project, build_no}) do
-
-  end
-
-  def interpret_command({:project_build_cancel, token, user, project, build_no}) do
-
-  end
-
-  def interpret_command({:project_build_trigger, token, user, project, branch, build_no}) do
-
-  end
-
-  def interpret_command({:project_add_ssh_key, token, user, project, key}) do
-
-  end
-
-  def interpret_command({:user_add_ssh_key, token, key}) do
-
-  end
-
-  def interpret_command({:user_add_heroku_key, token, key}) do
-
-  end
+  def interpret_command(:help),                                                      do: IO.puts usage
+  def interpret_command({:user,                    token}),                          do: URL.build(UserEndpoints.me, token)
+  def interpret_command({:projects,                token}),                          do: URL.build(UserEndpoints.projects, token)
+  def interpret_command({:recent_builds,           token}),                          do: URL.build(UserEndpoints.recent_builds, token)
+  def interpret_command({:project,                 token, user, project}),           do: URL.build(ProjectEndpoints.builds(user, project), token)
+  def interpret_command({:project_clear_cache,     token, user, project}),           do: URL.build(ProjectEndpoints.cache(user, project), token)
+  def interpret_command({:project_build,           token, user, project, build_no}), do: URL.build(ProjectEndpoints.details(user, project, build_no), token)
+  def interpret_command({:project_build_artifacts, token, user, project, build_no}), do: URL.build(ProjectEndpoints.artifacts(user, project, build_no), token)
+  def interpret_command({:project_build_retry,     token, user, project, build_no}), do: URL.build(ProjectEndpoints.retry(user, project, build_no), token)
+  def interpret_command({:project_build_cancel,    token, user, project, build_no}), do: URL.build(ProjectEndpoints.cancel(user, project, build_no), token)
+  def interpret_command({:project_build_trigger,   token, user, project, branch}),   do: URL.build(ProjectEndpoints.trigger(user, project, branch), token)
+  def interpret_command({:project_add_ssh_key,     token, user, project, key}),      do: URL.build(ProjectEndpoints.ssh_key(user, project, key), token)
+  def interpret_command({:user_add_ssh_key,        token, key}),                     do: URL.build(User.ssh_key(key), token)
+  def interpret_command({:user_add_heroku_key,     token, key}),                     do: URL.build(User.heroku_key(key), token)
 
   defp usage do
     """
