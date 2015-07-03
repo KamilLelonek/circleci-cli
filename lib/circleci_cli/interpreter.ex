@@ -1,6 +1,58 @@
 defmodule CircleciCli.Interpreter do
   def interpret_command(:help), do: IO.puts usage
 
+  def interpret_command({:user, token}) do
+
+  end
+
+  def interpret_command({:projects, token}) do
+
+  end
+
+  def interpret_command({:recent_builds, token}) do
+
+  end
+
+  def interpret_command({:project, token, user, project}) do
+
+  end
+
+  def interpret_command({:project_clear_cache, token, user, project}) do
+
+  end
+
+  def interpret_command({:project_build, token, user, project, build_no}) do
+
+  end
+
+  def interpret_command({:project_build_artifacts, token, user, project, build_no}) do
+
+  end
+
+  def interpret_command({:project_build_retry, token, user, project, build_no}) do
+
+  end
+
+  def interpret_command({:project_build_cancel, token, user, project, build_no}) do
+
+  end
+
+  def interpret_command({:project_build_trigger, token, user, project, branch, build_no}) do
+
+  end
+
+  def interpret_command({:project_add_ssh_key, token, user, project, key}) do
+
+  end
+
+  def interpret_command({:user_add_ssh_key, token, key}) do
+
+  end
+
+  def interpret_command({:user_add_heroku_key, token, key}) do
+
+  end
+
   defp usage do
     """
 
