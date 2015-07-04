@@ -35,4 +35,8 @@ defmodule CircleciCli.InterpreterTest do
     assert_capture_io_parse_and_interpret []
     assert_capture_io_parse_and_interpret ["whatever"]
   end
+
+  defp assert_capture_io_parse_and_interpret(args) do
+    assert_capture_io args, &parse_and_interpret/1
+  end
 end
