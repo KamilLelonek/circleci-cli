@@ -28,7 +28,7 @@ defmodule CircleciCli.Interpreter do
       { [user: user, project: project, key:    key],    ["project-key"] } -> { :project_add_ssh_key,     token, user, project, key    }
       { [key:  key],                                    ["user-key"]    } -> { :user_add_ssh_key,        token, key                   }
       { [key:  key],                                    ["heroku-key"]  } -> { :user_add_heroku_key,     token, key                   }
-      _                                                                   -> :help
+      _                                                                   -> show_help
     end
   end
 
