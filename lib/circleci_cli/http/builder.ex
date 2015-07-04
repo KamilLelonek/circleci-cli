@@ -1,4 +1,9 @@
 defmodule CircleciCli.HTTP.Builder do
+  require CircleciCli.User.Endpoints,    as: UserEndpoints
+  require CircleciCli.Project.Endpoints, as: ProjectEndpoints
+  require CircleciCli.Build.Endpoints,   as: BuildEndpoints
+  require CircleciCli.HTTP.URL,          as: URL
+
   def build_request({:user, token}) do
     [
       url:    URL.build(UserEndpoints.me, token),
