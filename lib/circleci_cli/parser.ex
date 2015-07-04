@@ -1,25 +1,5 @@
 defmodule CircleciCli.Parser do
-  def parse_args(token, args) do
-    case parsed_args(args) do
-      { [help: true],                                   _,               _ } -> :help
-      { _,                                              ["user"],        _ } -> { :user,                    token                        }
-      { _,                                              ["projects"],    _ } -> { :projects,                token                        }
-      { _,                                              ["builds"],      _ } -> { :recent_builds,           token                        }
-      { [user: user, project: project],                 ["project"],     _ } -> { :project,                 token, user, project         }
-      { [user: user, project: project],                 ["clear-cache"], _ } -> { :project_clear_cache,     token, user, project         }
-      { [user: user, project: project, build:  build],  ["build"],       _ } -> { :project_build,           token, user, project, build  }
-      { [user: user, project: project, build:  build],  ["artifacts"],   _ } -> { :project_build_artifacts, token, user, project, build  }
-      { [user: user, project: project, build:  build],  ["retry"],       _ } -> { :project_build_retry,     token, user, project, build  }
-      { [user: user, project: project, build:  build],  ["cancel"],      _ } -> { :project_build_cancel,    token, user, project, build  }
-      { [user: user, project: project, branch: branch], ["trigger"],     _ } -> { :project_build_trigger,   token, user, project, branch }
-      { [user: user, project: project, key:    key],    ["project-key"], _ } -> { :project_add_ssh_key,     token, user, project, key    }
-      { [key:  key],                                    ["user-key"],    _ } -> { :user_add_ssh_key,        token, key                   }
-      { [key:  key],                                    ["heroku-key"],  _ } -> { :user_add_heroku_key,     token, key                   }
-      _                                                                      -> :help
-    end
-  end
-
-  defp parsed_args(args) do
+  def parse(args) do
     OptionParser.parse(
       args,
       switches: [
@@ -28,7 +8,8 @@ defmodule CircleciCli.Parser do
         project: :string,
         build:   :integer,
         branch:  :string,
-        key:     :string
+        key:     :string,
+        token:   :string
       ],
       aliases:  [
         h: :help,
@@ -36,7 +17,8 @@ defmodule CircleciCli.Parser do
         p: :project,
         n: :build,
         b: :branch,
-        k: :key
+        k: :key,
+        t:  :token
       ]
     )
   end
