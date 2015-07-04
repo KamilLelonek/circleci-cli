@@ -1,9 +1,4 @@
 defmodule CircleciCli.Interpreter do
-  require CircleciCli.Build.Endpoints,   as: BuildEndpoints
-  require CircleciCli.Project.Endpoints, as: ProjectEndpoints
-  require CircleciCli.User.Endpoints,    as: UserEndpoints
-  require CircleciCli.HTTP.URL,          as: URL
-
   def check_for_help({switches, command, _}) do
     case extract_help_flag(switches) do
       nil  -> {switches, command}
