@@ -12,6 +12,6 @@ defmodule CircleciCli.Build.Endpoints do
   end
 
   def cancel(user, project, build_number) do
-    " /project/#{user}/#{project}/#{build_number}/cancel"
+    "/project/#{user}/#{project}/#{build_number}/cancel"
   end
 end
