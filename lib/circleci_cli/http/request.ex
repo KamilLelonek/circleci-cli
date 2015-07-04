@@ -1,4 +1,4 @@
 defmodule CircleciCli.HTTP.Request do
-  def send(_) do
+  def send([url: url, method: method, body: body]) do
   end
 end
