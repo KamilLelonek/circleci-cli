@@ -10,7 +10,7 @@ defmodule CircleciCli.Cli do
       |> Parser.parse
       |> Interpreter.check_for_help
       |> Credentials.check
-      |> Interpreter.interpret_command
+      |> Interpreter.interpret
       |> Builder.build_request
       |> Request.send
   end
