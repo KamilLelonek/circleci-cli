@@ -11,11 +11,11 @@ defmodule CircleciCli.User.Endpoints do
     "/recent-builds"
   end
 
-  def ssh_key(key) do
+  def ssh_key do
     "/user/ssh-key"
   end
 
-  def heroku_key(key) do
+  def heroku_key do
     "/user/heroku-key"
   end
 end

@@ -3,7 +3,7 @@ defmodule CircleciCli.Project.Endpoints do
     "/project/#{user}/#{project}"
   end
 
-  def ssh_key(user, project, key) do
+  def ssh_key(user, project) do
     "/project/#{user}/#{project}/ssh-key"
   end
 
