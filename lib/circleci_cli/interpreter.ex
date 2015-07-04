@@ -4,6 +4,34 @@ defmodule CircleciCli.Interpreter do
   require CircleciCli.User.Endpoints,    as: UserEndpoints
   require CircleciCli.HTTP.URL,          as: URL
 
+  def check_for_help({switches, command, _}) do
+    case extract_help_flag(switches) do
+      nil  -> {switches, command}
+      true -> show_help
+    end
+  end
+
+  defp extract_help_flag(switches), do: Keyword.get(switches, :help)
+
+  def interpret({token, command, switches}) do
+    # case args do
+    #   { _,                                              ["user"],        _ } -> { :user,                    token                        }
+    #   { _,                                              ["projects"],    _ } -> { :projects,                token                        }
+    #   { _,                                              ["builds"],      _ } -> { :recent_builds,           token                        }
+    #   { [user: user, project: project],                 ["project"],     _ } -> { :project,                 token, user, project         }
+    #   { [user: user, project: project],                 ["clear-cache"], _ } -> { :project_clear_cache,     token, user, project         }
+    #   { [user: user, project: project, build:  build],  ["build"],       _ } -> { :project_build,           token, user, project, build  }
+    #   { [user: user, project: project, build:  build],  ["artifacts"],   _ } -> { :project_build_artifacts, token, user, project, build  }
+    #   { [user: user, project: project, build:  build],  ["retry"],       _ } -> { :project_build_retry,     token, user, project, build  }
+    #   { [user: user, project: project, build:  build],  ["cancel"],      _ } -> { :project_build_cancel,    token, user, project, build  }
+    #   { [user: user, project: project, branch: branch], ["trigger"],     _ } -> { :project_build_trigger,   token, user, project, branch }
+    #   { [user: user, project: project, key:    key],    ["project-key"], _ } -> { :project_add_ssh_key,     token, user, project, key    }
+    #   { [key:  key],                                    ["user-key"],    _ } -> { :user_add_ssh_key,        token, key                   }
+    #   { [key:  key],                                    ["heroku-key"],  _ } -> { :user_add_heroku_key,     token, key                   }
+    #   _                                                                      -> :help
+    # end
+  end
+
   def interpret_command({:user,                    token}),                          do: [url: URL.build(UserEndpoints.me, token)]
   def interpret_command({:projects,                token}),                          do: [url: URL.build(UserEndpoints.projects, token)]
   def interpret_command({:recent_builds,           token}),                          do: [url: URL.build(UserEndpoints.recent_builds, token)]
@@ -18,7 +46,7 @@ defmodule CircleciCli.Interpreter do
   def interpret_command({:project_build_retry,     token, user, project, build_no}), do: [url: URL.build(BuildEndpoints.retry(user, project, build_no), token)]
   def interpret_command({:project_build_cancel,    token, user, project, build_no}), do: [url: URL.build(BuildEndpoints.cancel(user, project, build_no), token)]
 
-  def interpret_command(:help) do
+  def show_help do
     IO.puts """
       Usage: circleci [command] [--token=CIRCLECI_API_TOKEN]
 

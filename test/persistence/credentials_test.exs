@@ -6,6 +6,7 @@ defmodule CircleciCli.Persistence.CredentialsTest do
   require CircleciCli.Persistence.Credentials, as: Credentials
   require CircleciCli.Persistence.Token,       as: Token
   require CircleciCli.Parser,                  as: Parser
+  require CircleciCli.Interpreter,             as: Interpreter
 
   @token "token"
 
@@ -40,6 +41,10 @@ defmodule CircleciCli.Persistence.CredentialsTest do
     end
   end
 
-  defp check(arguments), do: arguments |> parse |> Credentials.check
-  defp parse(arguments), do: Parser.parse(arguments)
+  defp check(arguments) do
+    arguments
+      |> Parser.parse
+      |> Interpreter.check_for_help
+      |> Credentials.check
+  end
 end

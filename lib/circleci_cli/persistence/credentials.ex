@@ -3,9 +3,9 @@ defmodule CircleciCli.Persistence.Credentials do
 
   @default_token ""
 
-  def check({switches, command, _}) do
+  def check({switches, command}) do
     case separate_token(switches) do
-      {token, switches} -> IO.puts(token);{extract_token(token), command, switches}
+      {token, switches} -> {extract_token(token), command, switches}
     end
   end
 
