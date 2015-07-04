@@ -5,8 +5,11 @@ defmodule CircleciCli.Persistence.CredentialsTest do
 
   require CircleciCli.Persistence.Credentials, as: Credentials
   require CircleciCli.Persistence.Token,       as: Token
+  require CircleciCli.Parser,                  as: Parser
 
   @token "token"
+
+  defp result, do: { "token", [], [] }
 
   setup do
     on_exit fn ->
@@ -16,24 +19,27 @@ defmodule CircleciCli.Persistence.CredentialsTest do
 
   test "should find a token in environmental variable" do
     System.put_env("CIRCLECI_API_TOKEN", @token)
-    assert Credentials.check([]) == @token
+    assert check([]) == result
   end
 
   test "should find a token in a file" do
     Token.write @token
-    assert Credentials.check([]) == @token
+    assert check([]) == result
   end
 
   test "should find a token in arguments" do
-    assert Credentials.check(["--token", @token])   == @token
-    assert Credentials.check(["--token=#{@token}"]) == @token
-    assert Credentials.check(["-t", @token])        == @token
-    assert Credentials.check(["-t=#{@token}"])      == @token
+    assert check(["--token", @token])   == result
+    assert check(["--token=#{@token}"]) == result
+    assert check(["-t", @token])        == result
+    assert check(["-t=#{@token}"])      == result
   end
 
   test "should shutdown when no token" do
     assert capture_io fn ->
-      assert catch_exit(Credentials.check([])) == :shutdown
+      assert catch_exit(check([])) == :shutdown
     end
   end
+
+  defp check(arguments), do: arguments |> parse |> Credentials.check
+  defp parse(arguments), do: Parser.parse(arguments)
 end
