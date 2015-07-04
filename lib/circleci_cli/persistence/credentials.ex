@@ -1,26 +1,17 @@
 defmodule CircleciCli.Persistence.Credentials do
   require CircleciCli.Persistence.Token, as: Token
 
-  def check(args) do
-    case token_from_args(args) do
-      token when token != nil and token != "" -> token
-      _ -> fetch_token Token.read
+  def check({switches, command, _}) do
+    case separate_token(switches) do
+      {token, switches} -> {extract_token(token), command, switches}
     end
   end
 
-  defp token_from_args(args) do
-    parsed_args(args)|> elem(0) |> Keyword.get(:token)
-  end
+  defp separate_token(switches), do: switches |> Keyword.pop(:token, "")
 
-  defp parsed_args(args) do
-    OptionParser.parse(
-      args,
-      switches: [token: :string],
-      aliases:  [t:     :token]
-    )
-  end
-
-  defp fetch_token({:error, _}) do
+  defp extract_token(""),           do: extract_token(Token.read)
+  defp extract_token({:ok, token}), do: token
+  defp extract_token({:error, _})   do
     IO.puts """
       CircleCI API token is not set! Neither file nor environmental variable with token was found.
 
@@ -33,5 +24,5 @@ defmodule CircleciCli.Persistence.Credentials do
     exit :shutdown
   end
 
-  defp fetch_token({:ok, token}), do: token
+  defp extract_token(token), do: token
 end
