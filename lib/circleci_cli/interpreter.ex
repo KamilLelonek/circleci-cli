@@ -13,6 +13,7 @@ defmodule CircleciCli.Interpreter do
       { _,                                              ["user"]        } -> { :user,                    token                        }
       { _,                                              ["projects"]    } -> { :projects,                token                        }
       { _,                                              ["builds"]      } -> { :recent_builds,           token                        }
+      { _,                                              ["user-key"]    } -> { :user_add_ssh_key,        token                        }
       { [user: user, project: project],                 ["project"]     } -> { :project,                 token, user, project         }
       { [user: user, project: project],                 ["clear-cache"] } -> { :project_clear_cache,     token, user, project         }
       { [user: user, project: project, build:  build],  ["build"]       } -> { :project_build,           token, user, project, build  }
@@ -20,8 +21,7 @@ defmodule CircleciCli.Interpreter do
       { [user: user, project: project, build:  build],  ["retry"]       } -> { :project_build_retry,     token, user, project, build  }
       { [user: user, project: project, build:  build],  ["cancel"]      } -> { :project_build_cancel,    token, user, project, build  }
       { [user: user, project: project, branch: branch], ["trigger"]     } -> { :project_build_trigger,   token, user, project, branch }
-      { [user: user, project: project, key:    key],    ["project-key"] } -> { :project_add_ssh_key,     token, user, project, key    }
-      { [key:  key],                                    ["user-key"]    } -> { :user_add_ssh_key,        token, key                   }
+      { [user: user, project: project],                 ["project-key"] } -> { :project_create_ssh_key,  token, user, project         }
       { [key:  key],                                    ["heroku-key"]  } -> { :user_add_heroku_key,     token, key                   }
       _                                                                   -> show_help
     end
@@ -39,6 +39,7 @@ defmodule CircleciCli.Interpreter do
         user                                        Provides information about the signed in user.
         projects                                    List of all the projects you're following on CircleCI, with build information organized by branch.
         builds                                      Build summary for each of the last 30 recent builds, ordered by build number.
+        user-key                                    Adds a CircleCI key to your Github User account.
         project     -u USER -p PROJECT              Build summary for each of the last 30 builds for a single git repo.
         build       -u USER -p PROJECT -n BUILD     Full details for a single build. The response includes all of the fields from the build summary.
         artifacts   -u USER -p PROJECT -n BUILD     Lists the artifacts produced by a given build.
@@ -46,8 +47,7 @@ defmodule CircleciCli.Interpreter do
         cancel      -u USER -p PROJECT -n BUILD     Cancels the build, returns a summary of the build.
         trigger     -u USER -p PROJECT -b BRANCH    Triggers a new build, returns a summary of the build.
         clear-cache -u USER -p PROJECT              Clears the cache for a project.
-        project-key -u USER -p PROJECT -k KEY       Creates an ssh key used to access external systems that require SSH key-based authentication.
-        user-key    -k KEY                          Adds a CircleCI key to your Github User account.
+        project-key -u USER -p PROJECT              Creates an ssh key used to access external systems that require SSH key-based authentication.
         heroku-key  -k KEY                          Adds your Heroku API key to CircleCI, takes apikey as form param name.
 
       All flags have abbrevations and they are equivalent:
