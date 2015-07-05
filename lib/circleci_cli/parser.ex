@@ -1,8 +1,5 @@
 defmodule CircleciCli.Parser do
-  def parse(args) do
-    OptionParser.parse(
-      args,
-      switches: [
+  @switches [
         help:    :boolean,
         user:    :string,
         project: :string,
@@ -10,16 +7,23 @@ defmodule CircleciCli.Parser do
         branch:  :string,
         key:     :string,
         token:   :string
-      ],
-      aliases:  [
+      ]
+
+  @aliases [
         h: :help,
         u: :user,
         p: :project,
         n: :build,
         b: :branch,
         k: :key,
-        t:  :token
+        t: :token
       ]
+
+  def parse(args) do
+    OptionParser.parse(
+      args,
+      switches: @switches,
+      aliases:  @aliases
     )
   end
 end
