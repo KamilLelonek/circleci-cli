@@ -13,5 +13,6 @@ defmodule CircleciCli.Cli do
       |> Interpreter.interpret
       |> Builder.build_request
       |> Request.send
+      |> Request.process
   end
 end
