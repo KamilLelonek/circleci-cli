@@ -25,7 +25,8 @@ defmodule CircleciCli.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 0.7"}
+      {:httpoison, "~> 0.7"},
+      {:exjsx,     "~> 3.1.0"}
     ]
   end
 
