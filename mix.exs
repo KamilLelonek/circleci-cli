@@ -31,6 +31,6 @@ defmodule CircleciCli.Mixfile do
   end
 
   defp escript_config do
-    [main_module: CircleciCli.Cli]
+    [main_module: CircleciCli]
   end
 end
