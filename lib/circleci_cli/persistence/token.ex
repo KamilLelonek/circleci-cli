@@ -10,14 +10,14 @@ defmodule CircleciCli.Persistence.Token do
     System.delete_env @env_name
   end
 
-  defp read_token_from_file({ :error, _ }) do
+  defp read_token_from_file({ :ok, token }), do: { :ok, token }
+  defp read_token_from_file({ :error, _ })   do
     case token_from_env do
       nil   -> { :error, nil   }
       token -> { :ok,    token }
     end
   end
 
-  defp token_path,                           do: "#{System.user_home}/#{@file_name}"
-  defp token_from_env,                       do: System.get_env @env_name
-  defp read_token_from_file({ :ok, token }), do: { :ok, token }
+  defp token_path,     do: "#{System.user_home}/#{@file_name}"
+  defp token_from_env, do: System.get_env @env_name
 end
